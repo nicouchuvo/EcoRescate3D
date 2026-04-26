@@ -22,7 +22,7 @@ public class FugaAgua : MonoBehaviour, IInteractuable
         if (aguaVisual != null)
             aguaVisual.SetActive(false);
 
-        GameManager.instancia.SumarPunto();
+        GameManager.instancia.SumarPunto(15f);
 
         Debug.Log("Fuga reparada");
     }

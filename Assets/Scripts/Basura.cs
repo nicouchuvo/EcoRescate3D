@@ -1,14 +1,13 @@
-
 using UnityEngine;
 
 public class Basura : MonoBehaviour, IInteractuable
 {
-    public string tipo;
-
     public void Interactuar()
     {
-        Debug.Log("Recogiste: " + tipo);
-        GameManager.instancia.SumarPunto();
+        Debug.Log("Recogiendo basura");
+
+        GameManager.instancia.SumarPunto(10f);
+
         Destroy(gameObject);
     }
 }

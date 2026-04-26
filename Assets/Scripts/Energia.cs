@@ -1,43 +1,41 @@
 using UnityEngine;
 
-public class Energia : MonoBehaviour, IInteractuable
+public class Energia : MonoBehaviour, IInteractuable 
 {
-    public bool reparado = false;
+    public bool reparado = false; 
     public Light luz;
 
-    void Start()
+    void Start() 
     {
         // 🔥 Si no asignaste la luz, la busca automáticamente
         if (luz == null)
-        {
-            luz = GetComponentInChildren<Light>();
+        { 
+        luz = GetComponentInChildren<Light>();
         }
 
         // 🔥 Asegura que inicie encendida
-        if (luz != null)
+        if (luz != null) 
         {
             luz.enabled = true;
         }
     }
-
-    public void Interactuar()
+    public void Interactuar() 
     {
-        Debug.Log("INTERACTUANDO CON ENERGIA");
-
+        Debug.Log("INTERACTUANDO CON ENERGIA"); 
+        
         if (reparado) return;
 
         reparado = true;
 
         // 🔥 Apaga la luz
         if (luz != null)
-        {
-            luz.enabled = false;
+        { 
+            luz.enabled = false; 
         }
-        else
+        else 
         {
             Debug.LogWarning("No se encontró la luz en el objeto");
         }
-
-        GameManager.instancia.SumarPunto();
+        GameManager.instancia.SumarPunto(20f);
     }
 }
