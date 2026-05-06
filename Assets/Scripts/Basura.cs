@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class Basura : MonoBehaviour, IInteractuable
 {
+    public bool esReciclable;
+
     public void Interactuar()
     {
-        Debug.Log("Recogiendo basura");
+        Debug.Log("Recogiste basura");
 
-        GameManager.instancia.SumarPunto(10f);
+        PlayerTrash.instance.TomarBasura(this);
 
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

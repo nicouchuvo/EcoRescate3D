@@ -4,14 +4,14 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movimiento")]
     public float speed = 4f;
-    public float runSpeed = 7f;
+    public float runSpeed = 6f;
     public float crouchSpeed = 2f;
-    public float rotationSpeed = 200f;
-    public float smoothSpeed = 10f;
+    public float rotationSpeed = 120f;
+    public float smoothSpeed = 8f;
 
     [Header("Salto")]
-    public float jumpForce = 2.5f;
-    public float gravity = -25f;
+    public float jumpForce = 1.0f;   
+    public float gravity = -30f;       
 
     [Header("Referencias")]
     public Animator anim;
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        float vertical = Input.GetAxisRaw("Vertical");   // RAW = sin retraso
+        float vertical = Input.GetAxisRaw("Vertical");
         float horizontal = Input.GetAxisRaw("Horizontal");
 
         bool shift = Input.GetKey(KeyCode.LeftShift);
@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
 
         isCrouching = ctrl;
 
-        // CORRECCIÓN CLAVE (esto arregla tu bug de quedarse quieto)
         bool isMoving = Mathf.Abs(vertical) > 0.1f;
         bool run = shift && isMoving && !isCrouching;
 
@@ -51,16 +50,16 @@ public class PlayerController : MonoBehaviour
 
         smoothVelocity = Mathf.Lerp(smoothVelocity, targetSpeed, Time.deltaTime * smoothSpeed);
 
-        // ROTACIÓN
+        // 🔥 ROTACIÓN MÁS CONTROLADA
         transform.Rotate(Vector3.up * horizontal * rotationSpeed * Time.deltaTime);
 
-        // SUELO
+        // 🔥 SUELO ESTABLE (IMPORTANTE)
         if (controller.isGrounded)
         {
             if (verticalVelocity < -2f)
                 verticalVelocity = -2f;
 
-            // SALTO
+            // SALTO MEJORADO
             if (Input.GetKeyDown(KeyCode.Space) && !isCrouching)
             {
                 verticalVelocity = Mathf.Sqrt(jumpForce * -2f * gravity);
@@ -75,7 +74,7 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(move * Time.deltaTime);
 
-        // ANIMACIONES (REHECHAS)
+        // 🔥 ANIMACIONES MÁS ESTABLES
         anim.SetFloat("yVelocity", verticalVelocity);
         anim.SetBool("crouch", isCrouching);
 
@@ -88,18 +87,18 @@ public class PlayerController : MonoBehaviour
             if (isCrouching)
             {
                 if (isMoving)
-                    anim.SetInteger("states", 4); // Crouch walk
+                    anim.SetInteger("states", 4);
                 else
-                    anim.SetInteger("states", 0); // Idle crouch
+                    anim.SetInteger("states", 0);
             }
             else
             {
                 if (!isMoving)
-                    anim.SetInteger("states", 0); // Idle
+                    anim.SetInteger("states", 0);
                 else if (run)
-                    anim.SetInteger("states", 2); // Run
+                    anim.SetInteger("states", 2);
                 else
-                    anim.SetInteger("states", 1); // Walk
+                    anim.SetInteger("states", 1);
             }
         }
     }
