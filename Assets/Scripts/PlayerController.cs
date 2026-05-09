@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     public float smoothSpeed = 8f;
 
     [Header("Salto")]
-    public float jumpForce = 1.0f;   
-    public float gravity = -30f;       
+    public float jumpForce = 1.0f;
+    public float gravity = -30f;
 
     [Header("Referencias")]
     public Animator anim;
@@ -50,23 +50,19 @@ public class PlayerController : MonoBehaviour
 
         smoothVelocity = Mathf.Lerp(smoothVelocity, targetSpeed, Time.deltaTime * smoothSpeed);
 
-        // 🔥 ROTACIÓN MÁS CONTROLADA
         transform.Rotate(Vector3.up * horizontal * rotationSpeed * Time.deltaTime);
 
-        // 🔥 SUELO ESTABLE (IMPORTANTE)
         if (controller.isGrounded)
         {
             if (verticalVelocity < -2f)
                 verticalVelocity = -2f;
 
-            // SALTO MEJORADO
             if (Input.GetKeyDown(KeyCode.Space) && !isCrouching)
             {
                 verticalVelocity = Mathf.Sqrt(jumpForce * -2f * gravity);
             }
         }
 
-        // GRAVEDAD
         verticalVelocity += gravity * Time.deltaTime;
 
         Vector3 move = transform.forward * smoothVelocity;
@@ -74,22 +70,17 @@ public class PlayerController : MonoBehaviour
 
         controller.Move(move * Time.deltaTime);
 
-        // 🔥 ANIMACIONES MÁS ESTABLES
         anim.SetFloat("yVelocity", verticalVelocity);
-        anim.SetBool("crouch", isCrouching);
 
-        if (!controller.isGrounded)
+        if (!controller.isGrounded && verticalVelocity > 0)
         {
-            anim.SetInteger("states", 3); // Jump
+            anim.SetInteger("states", 3);
         }
         else
         {
             if (isCrouching)
             {
-                if (isMoving)
-                    anim.SetInteger("states", 4);
-                else
-                    anim.SetInteger("states", 0);
+                anim.SetInteger("states", 4);
             }
             else
             {
