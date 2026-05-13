@@ -6,9 +6,13 @@ public class PlayerTrash : MonoBehaviour
 {
     public static PlayerTrash instance;
 
-    public List<Basura> inventario = new List<Basura>();
+    [Header("Inventario")]
+    public List<Basura> inventario =
+        new List<Basura>();
+
     public int capacidad = 5;
 
+    [Header("UI")]
     public TextMeshProUGUI textoBasura;
 
     void Awake()
@@ -21,62 +25,72 @@ public class PlayerTrash : MonoBehaviour
         ActualizarUI();
     }
 
-    // 🔥 TOMAR BASURA
-    public void TomarBasura(Basura basura)
+    // TOMAR BASURA
+    public bool TomarBasura(Basura basura)
     {
-        if (basura == null) return;
+        if (basura == null)
+            return false;
 
+        // INVENTARIO LLENO
         if (inventario.Count >= capacidad)
         {
             Debug.Log("Inventario lleno");
-            return;
+
+            return false;
         }
 
+        // EVITA DUPLICADOS
         if (inventario.Contains(basura))
         {
-            Debug.Log("Esa basura ya está en el inventario");
-            return;
+            return false;
         }
 
         inventario.Add(basura);
 
-        Debug.Log("Recogiste basura. Total: " + inventario.Count);
+        Debug.Log(
+            "Basura guardada: " +
+            inventario.Count
+        );
 
-        ActualizarUI(); // 🔥 actualizar aquí
+        ActualizarUI();
+
+        return true;
     }
 
-    // 🔥 SOLTAR TODA LA BASURA
-    public void SoltarBasura()
+    // ELIMINAR BASURA ESPECÍFICA
+    public void EliminarBasura(Basura basura)
     {
-        if (inventario.Count == 0)
+        if (inventario.Contains(basura))
         {
-            Debug.Log("No tienes basura");
-            return;
-        }
+            inventario.Remove(basura);
 
+            Debug.Log(
+                "Basura eliminada: " +
+                inventario.Count
+            );
+
+            ActualizarUI();
+        }
+    }
+
+    // LIMPIAR TODO
+    public void LimpiarInventario()
+    {
         inventario.Clear();
 
-        Debug.Log("Vaciaste el inventario");
-
-        ActualizarUI(); // 🔥 actualizar aquí
+        ActualizarUI();
     }
 
-    // 🔥 CONSULTA
-    public bool TieneBasura()
+    // UI
+    public void ActualizarUI()
     {
-        return inventario.Count > 0;
-    }
+        if (textoBasura == null)
+            return;
 
-    // 🔥 UI
-    void ActualizarUI()
-    {
-        if (textoBasura == null) return;
-
-        textoBasura.text = "Llevas: " + inventario.Count + "/" + capacidad;
-
-        if (inventario.Count > 0)
-        {
-            textoBasura.text += "\nVe a una caneca";
-        }
+        textoBasura.text =
+            "INVENTARIO: " +
+            inventario.Count +
+            "/" +
+            capacidad;
     }
 }

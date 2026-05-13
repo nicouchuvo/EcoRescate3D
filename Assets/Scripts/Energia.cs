@@ -1,41 +1,85 @@
 using UnityEngine;
 
-public class Energia : MonoBehaviour, IInteractuable 
+public class Energia : MonoBehaviour, IInteractuable
 {
-    public bool reparado = false; 
+    [Header("Estado")]
+    public bool reparado = false;
+
+    [Header("Luz del sistema")]
     public Light luz;
 
-    void Start() 
+    [Header("Puntos ambientales")]
+    public float puntosAmbientales = 20f;
+
+    void Start()
     {
-        // 🔥 Si no asignaste la luz, la busca automáticamente
+        // BUSCAR LUZ AUTOMATICAMENTE
         if (luz == null)
-        { 
-        luz = GetComponentInChildren<Light>();
+        {
+            luz =
+                GetComponentInChildren<Light>();
         }
 
-        // 🔥 Asegura que inicie encendida
-        if (luz != null) 
+        // ASEGURAR QUE INICIE ENCENDIDA
+        if (luz != null)
         {
             luz.enabled = true;
         }
     }
-    public void Interactuar() 
+
+    public void Interactuar()
     {
-        Debug.Log("INTERACTUANDO CON ENERGIA"); 
-        
-        if (reparado) return;
+        Debug.Log(
+            "INTERACTUANDO CON ENERGIA"
+        );
+
+        // EVITAR REPETIR
+        if (reparado)
+            return;
 
         reparado = true;
 
-        // 🔥 Apaga la luz
+        // APAGAR LUZ
         if (luz != null)
-        { 
-            luz.enabled = false; 
-        }
-        else 
         {
-            Debug.LogWarning("No se encontró la luz en el objeto");
+            luz.enabled = false;
         }
-        GameManager.instancia.SumarPunto(20f);
+        else
+        {
+            Debug.LogWarning(
+                "No se encontro la luz"
+            );
+        }
+
+        // SONIDO
+        if (
+            AudioManager.instance != null
+            &&
+            AudioManager.instance.apagarEnergia != null
+        )
+        {
+            AudioManager.instance
+                .ReproducirSonido(
+                    AudioManager.instance
+                        .apagarEnergia
+                );
+        }
+
+        // SUMAR AMBIENTE
+        GameManager.instance
+            .SumarAmbiente(
+                puntosAmbientales
+            );
+
+        // CONTADOR DE LUCES
+        GameManager.instance
+            .lucesApagadas++;
+
+        Debug.Log(
+            "Luces reparadas: "
+            +
+            GameManager.instance
+                .lucesApagadas
+        );
     }
 }

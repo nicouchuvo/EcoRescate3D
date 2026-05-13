@@ -2,44 +2,92 @@ using UnityEngine;
 
 public class InteraccionJugador : MonoBehaviour
 {
-    [Header("Interacción")]
-    public float distancia = 5f; // 🔥 un poco más amplio
+    [Header("Interaccion")]
+    public float distancia = 6f;
+
+    [Header("Camara")]
+    public Camera camaraJugador;
+
+    [Header("Layers")]
     public LayerMask capaInteractuable;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
         {
-            // 🔥 Detecta todo alrededor del jugador
-            Collider[] hits = Physics.OverlapSphere(transform.position + Vector3.up, distancia);
+            Ray ray =
+                camaraJugador.ScreenPointToRay(
+                    new Vector3(
+                        Screen.width / 2,
+                        Screen.height / 2
+                    )
+                );
 
-            foreach (Collider col in hits)
+            RaycastHit hit;
+
+            // Raycast SOLO a objetos interactuables
+            if (
+                Physics.Raycast(
+                    ray,
+                    out hit,
+                    distancia,
+                    capaInteractuable
+                )
+            )
             {
-                // 🔥 Verifica que esté en la capa correcta
-                if (((1 << col.gameObject.layer) & capaInteractuable) != 0)
+                Debug.Log(
+                    "Golpeando: " +
+                    hit.collider.name
+                );
+
+                Debug.Log(
+                    "Layer detectada: " +
+                    LayerMask.LayerToName(
+                        hit.collider.gameObject.layer
+                    )
+                );
+
+                // Buscar interfaz
+                IInteractuable obj =
+                    hit.collider
+                    .GetComponent<IInteractuable>();
+
+                // Buscar en padre si no existe
+                if (obj == null)
                 {
-                    // 🔥 Busca el script en el objeto o en el padre
-                    IInteractuable obj = col.GetComponent<IInteractuable>();
+                    obj =
+                        hit.collider
+                        .GetComponentInParent<IInteractuable>();
+                }
 
-                    if (obj == null)
-                        obj = col.GetComponentInParent<IInteractuable>();
+                // Interactuar
+                if (obj != null)
+                {
+                    Debug.Log(
+                        "Interactuando con: " +
+                        hit.collider.name
+                    );
 
-                    if (obj != null)
-                    {
-                        Debug.Log("Interactuando con: " + col.name);
-
-                        obj.Interactuar();
-                        return;
-                    }
+                    obj.Interactuar();
+                }
+                else
+                {
+                    Debug.LogWarning(
+                        "El objeto no tiene IInteractuable"
+                    );
                 }
             }
         }
     }
 
-    // 🔥 Solo para debug (ver el área de interacción)
+    // Gizmo para debug
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position + Vector3.up, distancia);
+
+        Gizmos.DrawWireSphere(
+            transform.position,
+            distancia
+        );
     }
 }

@@ -2,28 +2,67 @@ using UnityEngine;
 
 public class FugaAgua : MonoBehaviour, IInteractuable
 {
+    [Header("Estado")]
     public bool reparada = false;
+
+    [Header("Visual del agua")]
     public GameObject aguaVisual;
+
+    [Header("Puntos ambientales")]
+    public float puntosAmbientales = 15f;
 
     void Start()
     {
-        // Asegura que el agua esté activa al iniciar
+        // ASEGURAR QUE EL AGUA INICIE ACTIVA
         if (aguaVisual != null)
+        {
             aguaVisual.SetActive(true);
+        }
     }
 
     public void Interactuar()
     {
-        if (reparada) return;
+        // EVITAR REPETIR
+        if (reparada)
+            return;
 
         reparada = true;
 
-        // Apaga el agua cuando la arreglas
+        // APAGAR AGUA
         if (aguaVisual != null)
+        {
             aguaVisual.SetActive(false);
+        }
 
-        GameManager.instancia.SumarPunto(15f);
+        // SONIDO
+        if (
+            AudioManager.instance != null
+            &&
+            AudioManager.instance.repararAgua != null
+        )
+        {
+            AudioManager.instance
+                .ReproducirSonido(
+                    AudioManager.instance
+                        .repararAgua
+                );
+        }
 
-        Debug.Log("Fuga reparada");
+        // SUMAR AMBIENTE
+        GameManager.instance
+            .SumarAmbiente(
+                puntosAmbientales
+            );
+
+        // CONTADOR DE FUGAS
+        GameManager.instance
+            .fugasReparadas++;
+
+        Debug.Log(
+            "Fugas reparadas: "
+            +
+            GameManager.instance
+                .fugasReparadas
+        );
     }
 }
