@@ -48,6 +48,15 @@ public class FugaAgua : MonoBehaviour, IInteractuable
                 );
         }
 
+        // MENSAJE EDUCATIVO
+        if (
+            MensajesEducativos.instance != null
+        )
+        {
+            MensajesEducativos.instance
+                .MensajeAgua();
+        }
+
         // SUMAR AMBIENTE
         GameManager.instance
             .SumarAmbiente(

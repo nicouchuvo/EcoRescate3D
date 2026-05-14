@@ -59,6 +59,15 @@ public class Bin : MonoBehaviour, IInteractuable
                     "Basura depositada correctamente"
                 );
 
+                // MENSAJE EDUCATIVO
+                if (
+                    MensajesEducativos.instance != null
+                )
+                {
+                    MensajesEducativos.instance
+                        .MensajeReciclaje();
+                }
+
                 // SONIDO
                 if (
                     AudioManager.instance != null
@@ -91,6 +100,15 @@ public class Bin : MonoBehaviour, IInteractuable
                 Debug.Log(
                     "Basura incorrecta"
                 );
+
+                // MENSAJE EDUCATIVO
+                if (
+                    MensajesEducativos.instance != null
+                )
+                {
+                    MensajesEducativos.instance
+                        .MensajeError();
+                }
 
                 // CONSERVAR EN INVENTARIO
                 basuraNueva.Add(b);

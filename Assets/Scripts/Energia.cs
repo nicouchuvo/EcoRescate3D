@@ -65,6 +65,15 @@ public class Energia : MonoBehaviour, IInteractuable
                 );
         }
 
+        // MENSAJE EDUCATIVO
+        if (
+            MensajesEducativos.instance != null
+        )
+        {
+            MensajesEducativos.instance
+                .MensajeEnergia();
+        }
+
         // SUMAR AMBIENTE
         GameManager.instance
             .SumarAmbiente(
