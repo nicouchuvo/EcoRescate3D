@@ -26,9 +26,7 @@ public class MensajesEducativos : MonoBehaviour
         instance = this;
     }
 
-    // =========================
-    // MOSTRAR MENSAJE
-    // =========================
+
     public void MostrarMensaje(
         string mensaje
     )
@@ -50,9 +48,7 @@ public class MensajesEducativos : MonoBehaviour
         panel.SetActive(false);
     }
 
-    // =========================
-    // RECICLAJE
-    // =========================
+
     public void MensajeReciclaje()
     {
         MostrarMensaje(
@@ -65,9 +61,7 @@ public class MensajesEducativos : MonoBehaviour
         );
     }
 
-    // =========================
-    // ERROR
-    // =========================
+
     public void MensajeError()
     {
         MostrarMensaje(
@@ -80,9 +74,7 @@ public class MensajesEducativos : MonoBehaviour
         );
     }
 
-    // =========================
-    // AGUA
-    // =========================
+
     public void MensajeAgua()
     {
         MostrarMensaje(
@@ -95,9 +87,7 @@ public class MensajesEducativos : MonoBehaviour
         );
     }
 
-    // =========================
-    // ENERGIA
-    // =========================
+
     public void MensajeEnergia()
     {
         MostrarMensaje(

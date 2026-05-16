@@ -7,9 +7,7 @@ public class MenuPrincipal : MonoBehaviour
     public GameObject panelControles;
     public GameObject panelCreditos;
 
-    // =========================
-    // JUGAR
-    // =========================
+
     public void Jugar()
     {
         SceneManager.LoadScene(
@@ -17,9 +15,7 @@ public class MenuPrincipal : MonoBehaviour
         );
     }
 
-    // =========================
-    // CONTROLES
-    // =========================
+
     public void AbrirControles()
     {
         if (panelControles != null)
@@ -36,9 +32,7 @@ public class MenuPrincipal : MonoBehaviour
         }
     }
 
-    // =========================
-    // CREDITOS
-    // =========================
+
     public void AbrirCreditos()
     {
         if (panelCreditos != null)
@@ -55,9 +49,7 @@ public class MenuPrincipal : MonoBehaviour
         }
     }
 
-    // =========================
-    // SALIR
-    // =========================
+
     public void Salir()
     {
         Application.Quit();

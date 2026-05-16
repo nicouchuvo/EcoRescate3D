@@ -12,34 +12,34 @@ public class Bin : MonoBehaviour, IInteractuable
 
     public void Interactuar()
     {
-        // INVENTARIO VACIO
+
         if (PlayerTrash.instance.inventario.Count <= 0)
         {
             Debug.Log("Inventario vacio");
             return;
         }
 
-        // NUEVA LISTA
+
         List<Basura> basuraNueva =
             new List<Basura>();
 
-        // RECORRER INVENTARIO
+
         foreach (Basura b in PlayerTrash.instance.inventario)
         {
-            // SEGURIDAD
+
             if (b == null)
                 continue;
 
-            // BASURA CORRECTA
+
             if (b.esReciclable == aceptaReciclaje)
             {
-                // SUMAR AMBIENTE
+
                 GameManager.instance
                     .SumarAmbiente(
                         puntosCorrectos
                     );
 
-                // CONTADORES
+
                 if (b.esReciclable)
                 {
                     GameManager.instance
@@ -51,7 +51,7 @@ public class Bin : MonoBehaviour, IInteractuable
                         .desechosDepositados++;
                 }
 
-                // VERIFICAR OBJETIVO
+
                 GameManager.instance
                     .VerificarObjetivo();
 
@@ -59,7 +59,7 @@ public class Bin : MonoBehaviour, IInteractuable
                     "Basura depositada correctamente"
                 );
 
-                // MENSAJE EDUCATIVO
+
                 if (
                     MensajesEducativos.instance != null
                 )
@@ -68,7 +68,7 @@ public class Bin : MonoBehaviour, IInteractuable
                         .MensajeReciclaje();
                 }
 
-                // SONIDO
+
                 if (
                     AudioManager.instance != null
                     &&
@@ -82,16 +82,16 @@ public class Bin : MonoBehaviour, IInteractuable
                         );
                 }
 
-                // ELIMINAR BASURA
+
                 Destroy(
                     b.gameObject
                 );
             }
 
-            // BASURA INCORRECTA
+
             else
             {
-                // RESTAR AMBIENTE
+
                 GameManager.instance
                     .RestarAmbiente(
                         castigoIncorrecto
@@ -101,7 +101,7 @@ public class Bin : MonoBehaviour, IInteractuable
                     "Basura incorrecta"
                 );
 
-                // MENSAJE EDUCATIVO
+
                 if (
                     MensajesEducativos.instance != null
                 )
@@ -110,17 +110,17 @@ public class Bin : MonoBehaviour, IInteractuable
                         .MensajeError();
                 }
 
-                // CONSERVAR EN INVENTARIO
+
                 basuraNueva.Add(b);
             }
         }
 
-        // LIMPIAR INVENTARIO
+
         PlayerTrash.instance
             .inventario
             .Clear();
 
-        // DEVOLVER SOLO BASURA INCORRECTA
+
         foreach (Basura b in basuraNueva)
         {
             PlayerTrash.instance
@@ -128,11 +128,11 @@ public class Bin : MonoBehaviour, IInteractuable
                 .Add(b);
         }
 
-        // ACTUALIZAR UI
+
         PlayerTrash.instance
             .ActualizarUI();
 
-        // DEBUG FINAL
+
         Debug.Log(
             "Inventario actual: "
             +

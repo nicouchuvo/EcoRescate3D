@@ -14,9 +14,7 @@ public class GameManager : MonoBehaviour
 
     public TMP_Text textoAmbiental;
 
-    // =========================
-    // UI ZONA 1
-    // =========================
+
     [Header("UI Zona 1")]
 
     public GameObject panelObjetivosBasura;
@@ -24,9 +22,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text textoReciclables;
     public TMP_Text textoDesechos;
 
-    // =========================
-    // UI ZONA 2
-    // =========================
+
     [Header("UI Zona 2")]
 
     public GameObject panelObjetivosZona2;
@@ -34,16 +30,12 @@ public class GameManager : MonoBehaviour
     public TMP_Text textoFugas;
     public TMP_Text textoLuces;
 
-    // =========================
-    // PANEL DESBLOQUEO
-    // =========================
+
     [Header("Panel Zona 2")]
 
     public GameObject panelZona2;
 
-    // =========================
-    // BARRA AMBIENTAL
-    // =========================
+
     [Header("Barra Ambiental")]
 
     public Slider barraAmbiental;
@@ -51,9 +43,8 @@ public class GameManager : MonoBehaviour
     public float valorActual = 50f;
     public float valorMax = 100f;
 
-    // =========================
-    // OBJETIVOS ZONA 1
-    // =========================
+
+
     [Header("Objetivos Basura")]
 
     public int reciclablesDepositados = 0;
@@ -62,9 +53,7 @@ public class GameManager : MonoBehaviour
     public int objetivoReciclables = 10;
     public int objetivoDesechos = 10;
 
-    // =========================
-    // OBJETIVOS ZONA 2
-    // =========================
+
     [Header("Zona 2")]
 
     public int fugasReparadas = 0;
@@ -73,16 +62,12 @@ public class GameManager : MonoBehaviour
     public int lucesApagadas = 0;
     public int lucesObjetivo = 5;
 
-    // =========================
-    // REJA
-    // =========================
+
     [Header("Puerta")]
 
     public GameObject rejaZona2;
 
-    // =========================
-    // CONTROL
-    // =========================
+
     bool zona2Desbloqueada = false;
 
     bool juegoTerminado = false;
@@ -98,19 +83,19 @@ public class GameManager : MonoBehaviour
 
         ActualizarUI();
 
-        // PANEL ZONA 2 OCULTO
+
         if (panelZona2 != null)
         {
             panelZona2.SetActive(false);
         }
 
-        // UI ZONA 2 OCULTA
+
         if (panelObjetivosZona2 != null)
         {
             panelObjetivosZona2.SetActive(false);
         }
 
-        // UI ZONA 1 ACTIVA
+
         if (panelObjetivosBasura != null)
         {
             panelObjetivosBasura.SetActive(true);
@@ -119,13 +104,11 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // EVITAR ERRORES
+
         if (juegoTerminado)
             return;
 
-        // =========================
-        // EL AMBIENTE BAJA SOLO
-        // =========================
+
         if (valorActual > 0)
         {
             valorActual -= Time.deltaTime * 0.7f;
@@ -140,16 +123,14 @@ public class GameManager : MonoBehaviour
 
         ActualizarUI();
 
-        // =========================
-        // GAME OVER
-        // =========================
+
         if (valorActual <= 1f)
         {
             juegoTerminado = true;
 
             Debug.Log("GAME OVER");
 
-            // SONIDO
+
             if (AudioManager.instance != null)
             {
                 AudioManager.instance
@@ -166,9 +147,7 @@ public class GameManager : MonoBehaviour
             );
         }
 
-        // =========================
-        // YOU WIN
-        // =========================
+
         if (
             fugasReparadas >= fugasObjetivo
             &&
@@ -179,7 +158,7 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("YOU WIN");
 
-            // SONIDO
+
             if (AudioManager.instance != null)
             {
                 AudioManager.instance
@@ -197,9 +176,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // =========================
-    // SUMAR AMBIENTE
-    // =========================
+
     public void SumarAmbiente(
         float cantidad
     )
@@ -216,9 +193,7 @@ public class GameManager : MonoBehaviour
         ActualizarUI();
     }
 
-    // =========================
-    // RESTAR AMBIENTE
-    // =========================
+
     public void RestarAmbiente(
         float cantidad
     )
@@ -234,14 +209,14 @@ public class GameManager : MonoBehaviour
 
         ActualizarUI();
 
-        // GAME OVER
+
         if (valorActual <= 1f)
         {
             juegoTerminado = true;
 
             Debug.Log("GAME OVER");
 
-            // SONIDO
+
             if (AudioManager.instance != null)
             {
                 AudioManager.instance
@@ -259,9 +234,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // =========================
-    // DESBLOQUEAR ZONA 2
-    // =========================
+
     public void VerificarObjetivo()
     {
         if (
@@ -285,7 +258,7 @@ public class GameManager : MonoBehaviour
                 "Zona 2 desbloqueada"
             );
 
-            // SONIDO
+
             if (AudioManager.instance != null)
             {
                 AudioManager.instance
@@ -295,25 +268,25 @@ public class GameManager : MonoBehaviour
                     );
             }
 
-            // ABRIR REJA
+
             if (rejaZona2 != null)
             {
                 rejaZona2.SetActive(false);
             }
 
-            // OCULTAR OBJETIVOS BASURA
+
             if (panelObjetivosBasura != null)
             {
                 panelObjetivosBasura.SetActive(false);
             }
 
-            // MOSTRAR OBJETIVOS ZONA 2
+
             if (panelObjetivosZona2 != null)
             {
                 panelObjetivosZona2.SetActive(true);
             }
 
-            // PANEL INFORMATIVO
+
             if (panelZona2 != null)
             {
                 panelZona2.SetActive(true);
@@ -326,9 +299,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // =========================
-    // OCULTAR PANEL
-    // =========================
+
     void OcultarPanelZona2()
     {
         if (panelZona2 != null)
@@ -337,19 +308,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // =========================
-    // ACTUALIZAR UI
-    // =========================
+
     void ActualizarUI()
     {
-        // BARRA
+
         if (barraAmbiental != null)
         {
             barraAmbiental.value =
                 valorActual;
         }
 
-        // TEXTO AMBIENTAL
+
         if (textoAmbiental != null)
         {
             textoAmbiental.text =
@@ -362,7 +331,7 @@ public class GameManager : MonoBehaviour
                 "%";
         }
 
-        // RECICLABLES
+
         if (textoReciclables != null)
         {
             textoReciclables.text =
@@ -385,7 +354,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // DESECHOS
+
         if (textoDesechos != null)
         {
             textoDesechos.text =
@@ -408,7 +377,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // FUGAS
+
         if (textoFugas != null)
         {
             textoFugas.text =
@@ -431,7 +400,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // LUCES
+
         if (textoLuces != null)
         {
             textoLuces.text =

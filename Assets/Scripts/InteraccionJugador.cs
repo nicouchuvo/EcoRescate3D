@@ -25,7 +25,7 @@ public class InteraccionJugador : MonoBehaviour
 
             RaycastHit hit;
 
-            // Raycast SOLO a objetos interactuables
+
             if (
                 Physics.Raycast(
                     ray,
@@ -47,12 +47,12 @@ public class InteraccionJugador : MonoBehaviour
                     )
                 );
 
-                // Buscar interfaz
+
                 IInteractuable obj =
                     hit.collider
                     .GetComponent<IInteractuable>();
 
-                // Buscar en padre si no existe
+
                 if (obj == null)
                 {
                     obj =
@@ -60,7 +60,7 @@ public class InteraccionJugador : MonoBehaviour
                         .GetComponentInParent<IInteractuable>();
                 }
 
-                // Interactuar
+
                 if (obj != null)
                 {
                     Debug.Log(
@@ -80,7 +80,7 @@ public class InteraccionJugador : MonoBehaviour
         }
     }
 
-    // Gizmo para debug
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;

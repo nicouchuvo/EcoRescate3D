@@ -25,13 +25,13 @@ public class PlayerTrash : MonoBehaviour
         ActualizarUI();
     }
 
-    // TOMAR BASURA
+
     public bool TomarBasura(Basura basura)
     {
         if (basura == null)
             return false;
 
-        // INVENTARIO LLENO
+
         if (inventario.Count >= capacidad)
         {
             Debug.Log("Inventario lleno");
@@ -39,7 +39,7 @@ public class PlayerTrash : MonoBehaviour
             return false;
         }
 
-        // EVITA DUPLICADOS
+
         if (inventario.Contains(basura))
         {
             return false;
@@ -57,7 +57,7 @@ public class PlayerTrash : MonoBehaviour
         return true;
     }
 
-    // ELIMINAR BASURA ESPECÍFICA
+
     public void EliminarBasura(Basura basura)
     {
         if (inventario.Contains(basura))
@@ -73,7 +73,7 @@ public class PlayerTrash : MonoBehaviour
         }
     }
 
-    // LIMPIAR TODO
+
     public void LimpiarInventario()
     {
         inventario.Clear();
@@ -81,7 +81,7 @@ public class PlayerTrash : MonoBehaviour
         ActualizarUI();
     }
 
-    // UI
+
     public void ActualizarUI()
     {
         if (textoBasura == null)

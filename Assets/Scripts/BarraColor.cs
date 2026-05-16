@@ -12,13 +12,11 @@ public class BarraColor : MonoBehaviour
 
     void Update()
     {
-        // Evita errores
+
         if (slider == null || fill == null)
             return;
 
-        // =========================
-        // VERDE
-        // =========================
+
         if (slider.value > 60)
         {
             fill.color = Color.green;
@@ -27,9 +25,7 @@ public class BarraColor : MonoBehaviour
                 Vector3.one;
         }
 
-        // =========================
-        // AMARILLO
-        // =========================
+
         else if (slider.value > 30)
         {
             fill.color = Color.yellow;
@@ -38,14 +34,12 @@ public class BarraColor : MonoBehaviour
                 Vector3.one;
         }
 
-        // =========================
-        // ROJO
-        // =========================
+
         else
         {
             fill.color = Color.red;
 
-            // EFECTO DE PELIGRO
+
             if (animarPeligro)
             {
                 float escala =

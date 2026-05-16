@@ -29,9 +29,6 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    // =========================
-    // REPRODUCIR SONIDO
-    // =========================
     public void ReproducirSonido(
         AudioClip clip
     )

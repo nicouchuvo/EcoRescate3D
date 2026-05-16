@@ -11,7 +11,7 @@ public class WaterFX : MonoBehaviour
         CreateSplash();
     }
 
-    // 1) CHORRO PRINCIPAL
+
     void CreateMainStream()
     {
         var go = new GameObject("Water_Main");
@@ -51,7 +51,7 @@ public class WaterFX : MonoBehaviour
         ApplyMaterial(ps);
     }
 
-    // 2) GOTITAS / SPRAY
+
     void CreateSpray()
     {
         var go = new GameObject("Water_Spray");
@@ -77,7 +77,7 @@ public class WaterFX : MonoBehaviour
         ApplyMaterial(ps);
     }
 
-    // 3) SPLASH EN EL SUELO
+
     void CreateSplash()
     {
         var go = new GameObject("Water_Splash");
@@ -101,13 +101,13 @@ public class WaterFX : MonoBehaviour
         ApplyMaterial(ps);
     }
 
-    // MATERIAL COMPARTIDO
+
     void ApplyMaterial(ParticleSystem ps)
     {
         var rend = ps.GetComponent<ParticleSystemRenderer>();
 
         var mat = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
-        mat.SetFloat("_Surface", 1); // Transparent
+        mat.SetFloat("_Surface", 1); 
         mat.SetColor("_BaseColor", new Color(0.6f, 0.8f, 1f, 0.25f));
 
         if (softTexture != null)

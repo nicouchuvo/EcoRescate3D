@@ -12,15 +12,15 @@ public class Basura : MonoBehaviour, IInteractuable
 
     public void Interactuar()
     {
-        // EVITA RECOGER DOS VECES
+
         if (recogida)
             return;
 
-        // INTENTAR GUARDAR EN INVENTARIO
+
         bool guardada =
             PlayerTrash.instance.TomarBasura(this);
 
-        // SI NO PUDO GUARDARSE
+
         if (!guardada)
         {
             return;
@@ -30,7 +30,7 @@ public class Basura : MonoBehaviour, IInteractuable
 
         Debug.Log("Recogiste basura");
 
-        // SONIDO
+
         if (
             AudioManager.instance != null
             &&
@@ -44,7 +44,7 @@ public class Basura : MonoBehaviour, IInteractuable
                 );
         }
 
-        // OCULTAR RENDERERS
+
         Renderer[] renderers =
             GetComponentsInChildren<Renderer>();
 
@@ -53,7 +53,7 @@ public class Basura : MonoBehaviour, IInteractuable
             r.enabled = false;
         }
 
-        // DESACTIVAR COLLIDERS
+
         Collider[] colliders =
             GetComponentsInChildren<Collider>();
 

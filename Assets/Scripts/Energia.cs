@@ -13,14 +13,14 @@ public class Energia : MonoBehaviour, IInteractuable
 
     void Start()
     {
-        // BUSCAR LUZ AUTOMATICAMENTE
+
         if (luz == null)
         {
             luz =
                 GetComponentInChildren<Light>();
         }
 
-        // ASEGURAR QUE INICIE ENCENDIDA
+
         if (luz != null)
         {
             luz.enabled = true;
@@ -33,13 +33,13 @@ public class Energia : MonoBehaviour, IInteractuable
             "INTERACTUANDO CON ENERGIA"
         );
 
-        // EVITAR REPETIR
+
         if (reparado)
             return;
 
         reparado = true;
 
-        // APAGAR LUZ
+
         if (luz != null)
         {
             luz.enabled = false;
@@ -51,7 +51,7 @@ public class Energia : MonoBehaviour, IInteractuable
             );
         }
 
-        // SONIDO
+
         if (
             AudioManager.instance != null
             &&
@@ -65,7 +65,7 @@ public class Energia : MonoBehaviour, IInteractuable
                 );
         }
 
-        // MENSAJE EDUCATIVO
+
         if (
             MensajesEducativos.instance != null
         )
@@ -74,13 +74,13 @@ public class Energia : MonoBehaviour, IInteractuable
                 .MensajeEnergia();
         }
 
-        // SUMAR AMBIENTE
+
         GameManager.instance
             .SumarAmbiente(
                 puntosAmbientales
             );
 
-        // CONTADOR DE LUCES
+
         GameManager.instance
             .lucesApagadas++;
 
